@@ -1,0 +1,129 @@
+.playlist {
+  padding: 20px;
+  color: white;
+}
+
+.playlist__header {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+.playlist__image {
+  width: 232px;
+  height: 232px;
+  object-fit: cover;
+  margin-right: 24px;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+}
+
+.playlist__info {
+  flex: 1;
+}
+
+.playlist__info h1 {
+  font-size: 96px;
+  font-weight: 900;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.playlist__info p {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.playlist__actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.playlist__playButton {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #1db954;
+  border: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 32px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.playlist__playButton:hover {
+  transform: scale(1.04);
+  background-color: #1ed760;
+}
+
+.playlist__favoriteButton,
+.playlist__moreButton {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  font-size: 24px;
+  margin-right: 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.playlist__favoriteButton:hover,
+.playlist__moreButton:hover {
+  color: white;
+}
+
+.playlist__tracks {
+  margin-top: 20px;
+}
+
+.playlist__trackHeader {
+  display: grid;
+  grid-template-columns: 50px 1fr 1fr 100px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #b3b3b3;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.playlist__track {
+  display: grid;
+  grid-template-columns: 50px 1fr 1fr 100px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s;
+}
+
+.playlist__track:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.playlist__trackNumber {
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playlist__trackTitle h4 {
+  margin: 0;
+  font-size: 16px;
+  color: white;
+}
+
+.playlist__trackTitle p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.playlist__trackAlbum,
+.playlist__trackDuration {
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+} 

@@ -1,0 +1,128 @@
+.album {
+  padding: 20px;
+  color: white;
+}
+
+.album__header {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+.album__image {
+  width: 232px;
+  height: 232px;
+  object-fit: cover;
+  margin-right: 24px;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+}
+
+.album__info {
+  flex: 1;
+}
+
+.album__info h1 {
+  font-size: 96px;
+  font-weight: 900;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.album__artist {
+  font-size: 14px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.album__releaseDate {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.album__actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.album__playButton {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #1db954;
+  border: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 32px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.album__playButton:hover {
+  transform: scale(1.04);
+  background-color: #1ed760;
+}
+
+.album__favoriteButton,
+.album__moreButton {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  font-size: 24px;
+  margin-right: 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.album__favoriteButton:hover,
+.album__moreButton:hover {
+  color: white;
+}
+
+.album__tracks {
+  margin-top: 20px;
+}
+
+.album__trackHeader {
+  display: grid;
+  grid-template-columns: 50px 1fr 100px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #b3b3b3;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.album__track {
+  display: grid;
+  grid-template-columns: 50px 1fr 100px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s;
+}
+
+.album__track:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.album__trackNumber {
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album__trackTitle h4 {
+  margin: 0;
+  font-size: 16px;
+  color: white;
+}
+
+.album__trackDuration {
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+} 
