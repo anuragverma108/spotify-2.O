@@ -1,6 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Search, LibraryMusic } from '@mui/icons-material';
+import { 
+  Home, 
+  Search, 
+  LibraryMusic, 
+  People, 
+  Palette, 
+  MusicNote,
+  Favorite,
+  History
+} from '@mui/icons-material';
 import './Sidebar.css';
 
 function handleImgError(e) {
@@ -33,15 +42,31 @@ function Sidebar() {
           <LibraryMusic />
           <span>Your Library</span>
         </Link>
+        <Link to="/social" className="sidebar__navItem">
+          <People />
+          <span>Social</span>
+        </Link>
+        <Link to="/personalization" className="sidebar__navItem">
+          <Palette />
+          <span>Personalization</span>
+        </Link>
       </nav>
 
       <div className="sidebar__playlists">
         <h2>PLAYLISTS</h2>
         <div className="sidebar__playlistList">
-          {/* Playlist items will be dynamically added here */}
-          <div className="sidebar__playlistItem">Liked Songs</div>
-          <div className="sidebar__playlistItem">Recently Played</div>
-          <div className="sidebar__playlistItem">My Playlist #1</div>
+          <Link to="/playlist/liked" className="sidebar__playlistItem">
+            <Favorite className="sidebar__playlistIcon" />
+            <span>Liked Songs</span>
+          </Link>
+          <Link to="/playlist/recent" className="sidebar__playlistItem">
+            <History className="sidebar__playlistIcon" />
+            <span>Recently Played</span>
+          </Link>
+          <Link to="/playlist/custom" className="sidebar__playlistItem">
+            <MusicNote className="sidebar__playlistIcon" />
+            <span>My Playlist #1</span>
+          </Link>
         </div>
       </div>
     </div>

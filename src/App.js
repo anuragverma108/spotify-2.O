@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,6 +9,11 @@ import Search from './pages/Search';
 import Library from './pages/Library';
 import Playlist from './pages/Playlist';
 import Album from './pages/Album';
+import AudioVisualizer from './components/visualizer/AudioVisualizer';
+import FriendActivity from './components/social/FriendActivity';
+import EnhancedPlaylist from './components/playlist/EnhancedPlaylist';
+import AdvancedSearch from './components/search/AdvancedSearch';
+import Personalization from './components/personalization/Personalization';
 import './App.css';
 
 const darkTheme = createTheme({
@@ -25,6 +30,17 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [audioData, setAudioData] = useState(new Array(32).fill(0));
+
+  // Simulate audio data updates
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setAudioData(prev => prev.map(() => Math.random() * 0.5));
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -35,15 +51,18 @@ function App() {
             <main className="app__main">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/search" element={<Search />} />
+                <Route path="/search" element={<AdvancedSearch />} />
                 <Route path="/library" element={<Library />} />
-                <Route path="/playlist/:id" element={<Playlist />} />
+                <Route path="/playlist/:id" element={<EnhancedPlaylist />} />
                 <Route path="/album/:id" element={<Album />} />
+                <Route path="/social" element={<FriendActivity />} />
+                <Route path="/personalization" element={<Personalization />} />
               </Routes>
+              {currentTrack && <AudioVisualizer audioData={audioData} />}
             </main>
           </div>
-          <Player />
-    </div>
+          <Player onTrackChange={setCurrentTrack} />
+        </div>
       </Router>
     </ThemeProvider>
   );
