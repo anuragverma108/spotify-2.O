@@ -1,0 +1,267 @@
+.queue {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  margin: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.queue--empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #b3b3b3;
+}
+
+.queue__emptyIcon {
+  font-size: 3rem !important;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.queue--empty p {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.queue--empty span {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.queue__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.queue__header:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.queue__headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-weight: 500;
+}
+
+.queue__count {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+}
+
+.queue__headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.queue__clearButton {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.queue__clearButton:hover {
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.queue__content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.queue__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.queue__item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.queue__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.queue__itemContent {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 15px;
+}
+
+.queue__dragHandle {
+  color: #666;
+  cursor: grab;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.queue__dragHandle:hover {
+  opacity: 1;
+}
+
+.queue__itemImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.queue__itemInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.queue__itemTitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+  margin: 0 0 2px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue__itemTitle--playing {
+  color: #1DB954;
+}
+
+.queue__itemArtist {
+  font-size: 0.8rem;
+  color: #b3b3b3;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue__itemActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.queue__playButton,
+.queue__removeButton {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.queue__playButton:hover {
+  color: #1DB954;
+  background: rgba(29, 185, 84, 0.1);
+}
+
+.queue__removeButton:hover {
+  color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.queue__itemDuration {
+  font-size: 0.8rem;
+  color: #888;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Custom scrollbar for queue content */
+.queue__content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.queue__content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.queue__content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.queue__content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Drag and drop styles */
+.queue__item[data-dragging="true"] {
+  opacity: 0.5;
+  transform: rotate(5deg);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .queue {
+    margin: 5px;
+  }
+  
+  .queue__header {
+    padding: 12px 15px;
+  }
+  
+  .queue__itemContent {
+    padding: 10px 15px;
+    gap: 10px;
+  }
+  
+  .queue__itemImage {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .queue__itemTitle {
+    font-size: 0.85rem;
+  }
+  
+  .queue__itemArtist {
+    font-size: 0.75rem;
+  }
+  
+  .queue__itemDuration {
+    font-size: 0.75rem;
+    min-width: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .queue__itemContent {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  
+  .queue__itemImage {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .queue__itemActions {
+    gap: 5px;
+  }
+  
+  .queue__playButton,
+  .queue__removeButton {
+    padding: 3px;
+  }
+} 

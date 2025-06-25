@@ -1,64 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useMusic } from '../contexts/MusicContext';
+import { samplePlaylists, sampleTracks } from '../data/musicData';
 import './Home.css';
 
 function Home() {
-  const featuredPlaylists = [
-    {
-      id: 1,
-      title: 'Today\'s Top Hits',
-      description: 'The biggest hits right now.',
-      imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80',
-    },
-    {
-      id: 2,
-      title: 'RapCaviar',
-      description: 'New music from Drake, Kendrick Lamar and more.',
-      imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
-    },
-    {
-      id: 3,
-      title: 'All Out 2010s',
-      description: 'The biggest songs of the 2010s.',
-      imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
-    },
-    {
-      id: 4,
-      title: 'Rock Classics',
-      description: 'Rock legends & epic songs.',
-      imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80',
-    },
-  ];
-
-  const recentlyPlayed = [
-    {
-      id: 1,
-      title: 'Shape of You',
-      artist: 'Ed Sheeran',
-      imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/45/Divide_cover.png',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-    },
-    {
-      id: 2,
-      title: 'Blinding Lights',
-      artist: 'The Weeknd',
-      imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
-    },
-    {
-      id: 3,
-      title: 'Dance Monkey',
-      artist: 'Tones and I',
-      imageUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
-    }
-  ];
+  const { playTrack, addToQueue, addToLiked, likedSongs } = useMusic();
 
   const handleSongClick = (song) => {
-    // You can implement a global state management solution here
-    // For now, we'll use a simple event dispatch
-    const event = new CustomEvent('playSong', { detail: song });
-    window.dispatchEvent(event);
+    playTrack(song);
+  };
+
+  const handleAddToQueue = (e, song) => {
+    e.stopPropagation();
+    addToQueue(song);
+  };
+
+  const handleLikeSong = (e, song) => {
+    e.stopPropagation();
+    if (likedSongs.some(s => s.id === song.id)) {
+      // Remove from liked (this would need to be implemented in context)
+    } else {
+      addToLiked(song);
+    }
   };
 
   function handleImgError(e) {
@@ -71,12 +36,19 @@ function Home() {
       <section className="home__section">
         <h2>Good Evening</h2>
         <div className="home__grid">
-          {featuredPlaylists.map((playlist) => (
-            <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="home__card">
-              <img src={playlist.imageUrl} alt={playlist.title} onError={handleImgError} />
-              <h3>{playlist.title}</h3>
-              <p>{playlist.description}</p>
-            </Link>
+          {samplePlaylists.slice(0, 6).map((playlist, index) => (
+            <motion.div
+              key={playlist.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Link to={`/playlist/${playlist.id}`} className="home__card">
+                <img src={playlist.imageUrl} alt={playlist.title} onError={handleImgError} />
+                <h3>{playlist.title}</h3>
+                <p>{playlist.description}</p>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -84,20 +56,89 @@ function Home() {
       <section className="home__section">
         <h2>Recently Played</h2>
         <div className="home__grid">
-          {recentlyPlayed.map((track) => (
-            <div 
-              key={track.id} 
+          {sampleTracks.slice(0, 6).map((track, index) => (
+            <motion.div
+              key={track.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
               className="home__item"
+              onClick={() => handleSongClick(track)}
+            >
+              <div className="home__itemImage">
+                <img 
+                  src={track.imageUrl} 
+                  alt={track.title} 
+                  onError={handleImgError} 
+                />
+                <div className="home__itemOverlay">
+                  <button 
+                    className="home__playButton"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    ▶
+                  </button>
+                  <button 
+                    className="home__queueButton"
+                    onClick={(e) => handleAddToQueue(e, track)}
+                  >
+                    +
+                  </button>
+                  <button 
+                    className={`home__likeButton ${likedSongs.some(s => s.id === track.id) ? 'home__likeButton--liked' : ''}`}
+                    onClick={(e) => handleLikeSong(e, track)}
+                  >
+                    ♥
+                  </button>
+                </div>
+              </div>
+              <h3>{track.title}</h3>
+              <p>{track.artist}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <section className="home__section">
+        <h2>Made For You</h2>
+        <div className="home__grid">
+          {samplePlaylists.slice(0, 4).map((playlist, index) => (
+            <motion.div
+              key={`made-${playlist.id}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Link to={`/playlist/${playlist.id}`} className="home__card home__card--made">
+                <img src={playlist.imageUrl} alt={playlist.title} onError={handleImgError} />
+                <h3>{playlist.title}</h3>
+                <p>{playlist.description}</p>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <section className="home__section">
+        <h2>Popular Artists</h2>
+        <div className="home__grid home__grid--artists">
+          {sampleTracks.slice(0, 8).map((track, index) => (
+            <motion.div
+              key={`artist-${track.id}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="home__artistCard"
               onClick={() => handleSongClick(track)}
             >
               <img 
                 src={track.imageUrl} 
-                alt={track.title} 
+                alt={track.artist} 
                 onError={handleImgError} 
               />
-              <h3>{track.title}</h3>
-              <p>{track.artist}</p>
-            </div>
+              <h3>{track.artist}</h3>
+              <p>Artist</p>
+            </motion.div>
           ))}
         </div>
       </section>

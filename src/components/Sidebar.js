@@ -8,7 +8,8 @@ import {
   Palette, 
   MusicNote,
   Favorite,
-  History
+  History,
+  Category
 } from '@mui/icons-material';
 import './Sidebar.css';
 
@@ -37,6 +38,10 @@ function Sidebar() {
         <Link to="/search" className="sidebar__navItem">
           <Search />
           <span>Search</span>
+        </Link>
+        <Link to="/genres" className="sidebar__navItem">
+          <Category />
+          <span>Genres</span>
         </Link>
         <Link to="/library" className="sidebar__navItem">
           <LibraryMusic />

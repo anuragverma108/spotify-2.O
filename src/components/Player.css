@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   height: 90px;
-  background-color: #181818;
-  border-top: 1px solid #282828;
+  background: linear-gradient(to right, #282828, #181818);
+  border-top: 1px solid #404040;
   padding: 0 16px;
   display: flex;
   align-items: center;
@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   width: 30%;
+  min-width: 180px;
 }
 
 .player__albumArt {
@@ -24,22 +25,50 @@
   width: 56px;
   margin-right: 14px;
   object-fit: cover;
+  border-radius: 4px;
+}
+
+.player__songInfo {
+  flex: 1;
+  min-width: 0;
 }
 
 .player__songInfo h4 {
   color: #fff;
   font-size: 14px;
-  margin: 0;
+  margin: 0 0 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .player__songInfo p {
   color: #b3b3b3;
   font-size: 12px;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__likeButton {
+  color: #b3b3b3 !important;
+  margin-left: 8px !important;
+  padding: 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.player__likeButton:hover {
+  color: #1DB954 !important;
+}
+
+.player__likedIcon {
+  color: #1DB954 !important;
 }
 
 .player__center {
   width: 40%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,17 +78,22 @@
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  gap: 16px;
 }
 
-.player__controlIcon {
-  color: #b3b3b3;
-  margin: 0 8px;
-  cursor: pointer;
-  transition: color 0.2s ease;
+.player__control {
+  color: #b3b3b3 !important;
+  padding: 8px !important;
+  transition: all 0.3s ease !important;
 }
 
-.player__controlIcon:hover {
-  color: #fff;
+.player__control:hover {
+  color: white !important;
+  transform: scale(1.1);
+}
+
+.player__control--active {
+  color: #1DB954 !important;
 }
 
 .player__playButton {
@@ -70,13 +104,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 16px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .player__playButton:hover {
   transform: scale(1.1);
+  background: #f0f0f0;
 }
 
 .player__playButton svg {
@@ -87,6 +121,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .player__time {
@@ -95,9 +130,23 @@
   min-width: 40px;
 }
 
-.player__progressBar {
+.player__slider {
   flex: 1;
-  margin: 0 8px;
+  color: #1DB954 !important;
+}
+
+.player__slider .MuiSlider-thumb {
+  width: 12px;
+  height: 12px;
+  background: #1DB954;
+}
+
+.player__slider .MuiSlider-track {
+  background: #1DB954;
+}
+
+.player__slider .MuiSlider-rail {
+  background: #4f4f4f;
 }
 
 .player__right {
@@ -105,15 +154,46 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.player__queueButton {
+  color: #b3b3b3 !important;
+  padding: 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+.player__queueButton:hover {
+  color: white !important;
+}
+
+.player__queueButton--active {
+  color: #1DB954 !important;
 }
 
 .player__volumeIcon {
   color: #b3b3b3;
-  margin-right: 8px;
+  font-size: 1.2rem !important;
 }
 
 .player__volumeSlider {
   width: 100px;
+  color: #1DB954 !important;
+}
+
+.player__volumeSlider .MuiSlider-thumb {
+  width: 12px;
+  height: 12px;
+  background: #1DB954;
+}
+
+.player__volumeSlider .MuiSlider-track {
+  background: #1DB954;
+}
+
+.player__volumeSlider .MuiSlider-rail {
+  background: #4f4f4f;
 }
 
 @media (max-width: 900px) {
@@ -147,6 +227,7 @@
   .player__left {
     width: 100%;
     justify-content: flex-start;
+    min-width: auto;
   }
   .player__albumArt {
     height: 40px;
@@ -165,14 +246,18 @@
   }
   .player__controls {
     margin-bottom: 4px;
+    gap: 8px;
+  }
+  .player__control {
+    padding: 4px !important;
   }
   .player__playButton {
     width: 28px;
     height: 28px;
-    margin: 0 8px;
   }
   .player__progress {
     font-size: 10px;
+    gap: 4px;
   }
   .player__time {
     font-size: 10px;
@@ -185,5 +270,7 @@
     width: 100%;
     justify-content: center;
     margin-top: 4px;
+    min-width: auto;
+    gap: 8px;
   }
 } 
