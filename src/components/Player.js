@@ -7,12 +7,17 @@ import {
   Shuffle,
   Repeat,
   VolumeUp,
+  VolumeOff,
   QueueMusic,
   Favorite,
-  FavoriteBorder
+  FavoriteBorder,
+  MoreVert,
+  Fullscreen,
+  FullscreenExit
 } from '@mui/icons-material';
-import { Slider, IconButton, Tooltip } from '@mui/material';
+import { Slider, IconButton, Tooltip, Menu, MenuItem, LinearProgress } from '@mui/material';
 import { useMusic } from '../contexts/MusicContext';
+import MusicImage from './MusicImage';
 import './Player.css';
 
 function Player() {
@@ -33,6 +38,10 @@ function Player() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showQueue, setShowQueue] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [previousVolume, setPreviousVolume] = useState(50);
   const audioRef = useRef(null);
 
   // Initialize with default track if none is set
@@ -87,8 +96,8 @@ function Player() {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    audio.volume = volume / 100;
-  }, [volume]);
+    audio.volume = isMuted ? 0 : volume / 100;
+  }, [volume, isMuted]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -109,6 +118,19 @@ function Player() {
 
   const handleVolumeChange = (event, newValue) => {
     dispatch({ type: 'SET_VOLUME', payload: newValue });
+    if (newValue > 0 && isMuted) {
+      setIsMuted(false);
+    }
+  };
+
+  const toggleMute = () => {
+    if (isMuted) {
+      setIsMuted(false);
+      dispatch({ type: 'SET_VOLUME', payload: previousVolume });
+    } else {
+      setPreviousVolume(volume);
+      setIsMuted(true);
+    }
   };
 
   const toggleShuffle = () => {
@@ -130,6 +152,18 @@ function Player() {
     }
   };
 
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
+
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -142,93 +176,166 @@ function Player() {
   }
 
   return (
-    <div className="player">
+    <div className={`player ${isFullscreen ? 'player--fullscreen' : ''}`}>
       <audio ref={audioRef} src={track?.audioUrl} hidden />
       
-      <div className="player__left">
-        <img
-          src={track?.albumArt}
-          alt={track?.title}
-          className="player__albumArt"
-          onError={handleImgError}
+      {/* Progress Bar */}
+      <div className="player__progress">
+        <LinearProgress 
+          variant="determinate" 
+          value={(currentTime / duration) * 100 || 0}
+          className="player__progressBar"
         />
-        <div className="player__songInfo">
-          <h4>{track?.title}</h4>
-          <p>{track?.artist}</p>
-        </div>
-        <Tooltip title={isLiked ? "Remove from Liked Songs" : "Add to Liked Songs"}>
-          <IconButton onClick={handleLike} className="player__likeButton">
-            {isLiked ? <Favorite className="player__likedIcon" /> : <FavoriteBorder />}
-          </IconButton>
-        </Tooltip>
       </div>
 
-      <div className="player__center">
-        <div className="player__controls">
-          <Tooltip title="Shuffle">
-            <IconButton 
-              onClick={toggleShuffle}
-              className={`player__control ${shuffle ? 'player__control--active' : ''}`}
-            >
-              <Shuffle />
-            </IconButton>
-          </Tooltip>
-          
-          <Tooltip title="Previous">
-            <IconButton className="player__control">
-              <SkipPrevious />
-            </IconButton>
-          </Tooltip>
-          
-          <div className="player__playButton" onClick={togglePlay}>
-            {isPlaying ? <Pause /> : <PlayArrow />}
-          </div>
-          
-          <Tooltip title="Next">
-            <IconButton className="player__control">
-              <SkipNext />
-            </IconButton>
-          </Tooltip>
-          
-          <Tooltip title={`Repeat ${repeat === 'one' ? '(One)' : repeat === 'all' ? '(All)' : '(Off)'}`}>
-            <IconButton 
-              onClick={toggleRepeat}
-              className={`player__control ${repeat !== 'none' ? 'player__control--active' : ''}`}
-            >
-              <Repeat />
-            </IconButton>
-          </Tooltip>
-        </div>
-
-        <div className="player__progress">
-          <span className="player__time">{formatTime(currentTime)}</span>
-          <Slider
-            value={currentTime}
-            max={duration}
-            onChange={handleSeek}
-            className="player__slider"
+      <div className="player__content">
+        <div className="player__left">
+          <MusicImage
+            src={track?.albumArt}
+            alt={track?.title}
+            className="player__albumArt"
+            onError={handleImgError}
           />
-          <span className="player__time">{formatTime(duration)}</span>
+          <div className="player__songInfo">
+            <h4>{track?.title}</h4>
+            <p>{track?.artist}</p>
+          </div>
+          <Tooltip title={isLiked ? "Remove from Liked Songs" : "Add to Liked Songs"}>
+            <IconButton onClick={handleLike} className="player__likeButton">
+              {isLiked ? <Favorite className="player__likedIcon" /> : <FavoriteBorder />}
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="More options">
+            <IconButton onClick={handleMenuOpen} className="player__menuButton">
+              <MoreVert />
+            </IconButton>
+          </Tooltip>
+        </div>
+
+        <div className="player__center">
+          <div className="player__controls">
+            <Tooltip title={`Shuffle ${shuffle ? '(On)' : '(Off)'}`}>
+              <IconButton 
+                onClick={toggleShuffle}
+                className={`player__control ${shuffle ? 'player__control--active' : ''}`}
+              >
+                <Shuffle />
+              </IconButton>
+            </Tooltip>
+            
+            <Tooltip title="Previous">
+              <IconButton className="player__control">
+                <SkipPrevious />
+              </IconButton>
+            </Tooltip>
+            
+            <div className="player__playButton" onClick={togglePlay}>
+              {isPlaying ? <Pause /> : <PlayArrow />}
+            </div>
+            
+            <Tooltip title="Next">
+              <IconButton className="player__control">
+                <SkipNext />
+              </IconButton>
+            </Tooltip>
+            
+            <Tooltip title={`Repeat ${repeat === 'one' ? '(One)' : repeat === 'all' ? '(All)' : '(Off)'}`}>
+              <IconButton 
+                onClick={toggleRepeat}
+                className={`player__control ${repeat !== 'none' ? 'player__control--active' : ''}`}
+              >
+                <Repeat />
+              </IconButton>
+            </Tooltip>
+          </div>
+
+          <div className="player__timeline">
+            <span className="player__time">{formatTime(currentTime)}</span>
+            <Slider
+              value={currentTime}
+              max={duration}
+              onChange={handleSeek}
+              className="player__seekSlider"
+              sx={{
+                color: '#1DB954',
+                '& .MuiSlider-thumb': {
+                  width: 12,
+                  height: 12,
+                  backgroundColor: '#1DB954',
+                  '&:hover, &.Mui-focusVisible': {
+                    boxShadow: '0 0 0 8px rgba(29, 185, 84, 0.2)',
+                  },
+                },
+                '& .MuiSlider-track': {
+                  backgroundColor: '#1DB954',
+                },
+                '& .MuiSlider-rail': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                },
+              }}
+            />
+            <span className="player__time">{formatTime(duration)}</span>
+          </div>
+        </div>
+
+        <div className="player__right">
+          <Tooltip title="Queue">
+            <IconButton 
+              onClick={() => setShowQueue(!showQueue)}
+              className={`player__control ${showQueue ? 'player__control--active' : ''}`}
+            >
+              <QueueMusic />
+            </IconButton>
+          </Tooltip>
+
+          <div className="player__volume">
+            <Tooltip title={isMuted ? "Unmute" : "Mute"}>
+              <IconButton onClick={toggleMute} className="player__volumeButton">
+                {isMuted ? <VolumeOff /> : <VolumeUp />}
+              </IconButton>
+            </Tooltip>
+            <Slider
+              value={isMuted ? 0 : volume}
+              onChange={handleVolumeChange}
+              className="player__volumeSlider"
+              sx={{
+                color: '#1DB954',
+                '& .MuiSlider-thumb': {
+                  width: 10,
+                  height: 10,
+                  backgroundColor: '#1DB954',
+                },
+                '& .MuiSlider-track': {
+                  backgroundColor: '#1DB954',
+                },
+                '& .MuiSlider-rail': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                },
+              }}
+            />
+          </div>
+
+          <Tooltip title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}>
+            <IconButton onClick={toggleFullscreen} className="player__control">
+              {isFullscreen ? <FullscreenExit /> : <Fullscreen />}
+            </IconButton>
+          </Tooltip>
         </div>
       </div>
 
-      <div className="player__right">
-        <Tooltip title="Queue">
-          <IconButton 
-            onClick={() => setShowQueue(!showQueue)}
-            className={`player__queueButton ${showQueue ? 'player__queueButton--active' : ''}`}
-          >
-            <QueueMusic />
-          </IconButton>
-        </Tooltip>
-        
-        <VolumeUp className="player__volumeIcon" />
-        <Slider
-          value={volume}
-          onChange={handleVolumeChange}
-          className="player__volumeSlider"
-        />
-      </div>
+      {/* More Options Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        className="player__menu"
+      >
+        <MenuItem onClick={handleMenuClose}>Add to Playlist</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Share</MenuItem>
+        <MenuItem onClick={handleMenuClose}>View Artist</MenuItem>
+        <MenuItem onClick={handleMenuClose}>View Album</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Copy Link</MenuItem>
+      </Menu>
     </div>
   );
 }

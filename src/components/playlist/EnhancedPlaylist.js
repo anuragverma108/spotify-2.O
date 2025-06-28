@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaUsers, FaShare, FaChartPie, FaPlus } from 'react-icons/fa';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import MusicImage from '../MusicImage';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -70,7 +71,7 @@ const EnhancedPlaylist = ({ playlist }) => {
                 key={index}
                 className="flex items-center space-x-2 bg-black/30 p-2 rounded-full"
               >
-                <img
+                <MusicImage
                   src={collaborator.avatar}
                   alt={collaborator.name}
                   className="w-6 h-6 rounded-full"
@@ -107,7 +108,7 @@ const EnhancedPlaylist = ({ playlist }) => {
             transition={{ delay: index * 0.1 }}
             className="flex items-center space-x-4 p-3 bg-black/20 rounded-lg"
           >
-            <img
+            <MusicImage
               src={track.cover}
               alt={track.name}
               className="w-12 h-12 rounded"
