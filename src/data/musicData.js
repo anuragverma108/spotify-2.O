@@ -1,6 +1,18 @@
 // Fallback image for any missing imageUrl
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80';
 
+const goodImages = [
+  'https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png', // Bohemian Rhapsody
+  'https://upload.wikimedia.org/wikipedia/en/2/26/Led_Zeppelin_-_Led_Zeppelin_IV.jpg', // Stairway to Heaven
+];
+
+function assignGoodImages(arr) {
+  return arr.map((item, idx) => ({
+    ...item,
+    imageUrl: goodImages[idx % goodImages.length]
+  }));
+}
+
 function withFallbackImage(arr) {
   return arr.map(item => ({
     ...item,
@@ -8,14 +20,13 @@ function withFallbackImage(arr) {
   }));
 }
 
-export const sampleTracks = withFallbackImage([
+export const sampleTracks = assignGoodImages([
   {
     id: 1,
     title: 'Shape of You',
     artist: 'Ed Sheeran',
     album: '÷ (Divide)',
     duration: '3:53',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/45/Divide_cover.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     genre: 'Pop',
     year: 2017,
@@ -33,7 +44,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'The Weeknd',
     album: 'After Hours',
     duration: '3:20',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/a/a0/The_Weeknd_-_After_Hours.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     genre: 'Pop',
     year: 2020,
@@ -51,7 +61,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Tones and I',
     album: 'The Kids Are Coming',
     duration: '3:29',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Tones_and_I_-_Dance_Monkey.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     genre: 'Pop',
     year: 2019,
@@ -69,7 +78,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Queen',
     album: 'A Night at the Opera',
     duration: '5:55',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     genre: 'Rock',
     year: 1975,
@@ -87,7 +95,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Eagles',
     album: 'Hotel California',
     duration: '6:30',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/49/Eagles_-_Hotel_California.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
     genre: 'Rock',
     year: 1976,
@@ -105,7 +112,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'John Lennon',
     album: 'Imagine',
     duration: '3:03',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/6/69/ImagineCover.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
     genre: 'Rock',
     year: 1971,
@@ -123,7 +129,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Michael Jackson',
     album: 'Thriller',
     duration: '4:54',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/5/57/Michael_Jackson_-_Thriller.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
     genre: 'Pop',
     year: 1982,
@@ -141,7 +146,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Led Zeppelin',
     album: 'Led Zeppelin IV',
     duration: '8:02',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/2/26/Led_Zeppelin_-_Led_Zeppelin_IV.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     genre: 'Rock',
     year: 1971,
@@ -159,7 +163,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Nirvana',
     album: 'Nevermind',
     duration: '5:01',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
     genre: 'Rock',
     year: 1991,
@@ -177,7 +180,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Bob Dylan',
     album: 'Highway 61 Revisited',
     duration: '6:13',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/0/0a/Bob_Dylan_-_Highway_61_Revisited.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
     genre: 'Rock',
     year: 1965,
@@ -195,7 +197,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Aretha Franklin',
     album: 'I Never Loved a Man the Way I Love You',
     duration: '2:27',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/8a/Aretha_Franklin_-_I_Never_Loved_a_Man_the_Way_I_Love_You.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
     genre: 'R&B',
     year: 1967,
@@ -213,7 +214,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Marvin Gaye',
     album: 'What\'s Going On',
     duration: '3:53',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/84/Marvin_Gaye_-_What%27s_Going_On.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
     genre: 'R&B',
     year: 1971,
@@ -231,7 +231,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Stevie Wonder',
     album: 'Talking Book',
     duration: '4:26',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/8a/Stevie_Wonder_-_Talking_Book.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3',
     genre: 'R&B',
     year: 1972,
@@ -249,7 +248,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Whitney Houston',
     album: 'The Bodyguard',
     duration: '4:31',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/8a/Whitney_Houston_-_I_Will_Always_Love_You.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3',
     genre: 'R&B',
     year: 1992,
@@ -267,7 +265,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Jimi Hendrix',
     album: 'Are You Experienced',
     duration: '2:50',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/b/b9/AreYouExperienced.jpg',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3',
     genre: 'Rock',
     year: 1967,
@@ -285,7 +282,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Mark Ronson ft. Bruno Mars',
     album: 'Uptown Special',
     duration: '3:57',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/8a/Mark_Ronson_-_Uptown_Special.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3',
     genre: 'Pop',
     year: 2014,
@@ -303,7 +299,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Luis Fonsi ft. Daddy Yankee',
     album: 'Vida',
     duration: '4:41',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/8a/Luis_Fonsi_-_Despacito.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3',
     genre: 'Pop',
     year: 2017,
@@ -321,7 +316,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Lil Nas X',
     album: '7',
     duration: '2:37',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/8a/Lil_Nas_X_-_7.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3',
     genre: 'Hip Hop',
     year: 2019,
@@ -339,7 +333,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Billie Eilish',
     album: 'When We All Fall Asleep, Where Do We Go?',
     duration: '3:14',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5e/When_We_All_Fall_Asleep%2C_Where_Do_We_Go%3F.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-19.mp3',
     genre: 'Pop',
     year: 2019,
@@ -357,7 +350,6 @@ export const sampleTracks = withFallbackImage([
     artist: 'Dua Lipa',
     album: 'Future Nostalgia',
     duration: '3:23',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/8/8a/Dua_Lipa_-_Future_Nostalgia.png',
     audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-20.mp3',
     genre: 'Pop',
     year: 2020,
@@ -371,14 +363,13 @@ export const sampleTracks = withFallbackImage([
   }
 ]);
 
-export const sampleAlbums = withFallbackImage([
+export const sampleAlbums = assignGoodImages([
   {
     id: 'album-1',
     title: '÷ (Divide)',
     artist: 'Ed Sheeran',
     year: 2017,
     genre: 'Pop',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/45/Divide_cover.png',
     tracks: sampleTracks.filter(track => track.albumId === 'album-1'),
     description: 'The third studio album by English singer-songwriter Ed Sheeran.',
     totalDuration: '46:14',
@@ -390,7 +381,6 @@ export const sampleAlbums = withFallbackImage([
     artist: 'The Weeknd',
     year: 2020,
     genre: 'Pop',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/a/a0/The_Weeknd_-_After_Hours.png',
     tracks: sampleTracks.filter(track => track.albumId === 'album-2'),
     description: 'The fourth studio album by Canadian singer The Weeknd.',
     totalDuration: '56:19',
@@ -402,7 +392,6 @@ export const sampleAlbums = withFallbackImage([
     artist: 'Queen',
     year: 1975,
     genre: 'Rock',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png',
     tracks: sampleTracks.filter(track => track.albumId === 'album-4'),
     description: 'The fourth studio album by British rock band Queen.',
     totalDuration: '43:08',
@@ -414,7 +403,6 @@ export const sampleAlbums = withFallbackImage([
     artist: 'Michael Jackson',
     year: 1982,
     genre: 'Pop',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/5/57/Michael_Jackson_-_Thriller.png',
     tracks: sampleTracks.filter(track => track.albumId === 'album-7'),
     description: 'The sixth studio album by American singer Michael Jackson.',
     totalDuration: '42:19',
@@ -426,7 +414,6 @@ export const sampleAlbums = withFallbackImage([
     artist: 'Led Zeppelin',
     year: 1971,
     genre: 'Rock',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/2/26/Led_Zeppelin_-_Led_Zeppelin_IV.jpg',
     tracks: sampleTracks.filter(track => track.albumId === 'album-8'),
     description: 'The fourth studio album by English rock band Led Zeppelin.',
     totalDuration: '42:34',
@@ -434,11 +421,10 @@ export const sampleAlbums = withFallbackImage([
   }
 ]);
 
-export const sampleArtists = withFallbackImage([
+export const sampleArtists = assignGoodImages([
   {
     id: 'artist-1',
     name: 'Ed Sheeran',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/45/Ed_Sheeran-6886_%28cropped%29.jpg',
     genre: 'Pop',
     followers: '45.2M',
     monthlyListeners: '52.1M',
@@ -449,7 +435,6 @@ export const sampleArtists = withFallbackImage([
   {
     id: 'artist-2',
     name: 'The Weeknd',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/The_Weeknd_2015.jpg/800px-The_Weeknd_2015.jpg',
     genre: 'Pop',
     followers: '38.7M',
     monthlyListeners: '41.3M',
@@ -460,7 +445,6 @@ export const sampleArtists = withFallbackImage([
   {
     id: 'artist-4',
     name: 'Queen',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_%E2%80%93_montage_%E2%80%93_7.jpg',
     genre: 'Rock',
     followers: '28.9M',
     monthlyListeners: '32.5M',
@@ -471,7 +455,6 @@ export const sampleArtists = withFallbackImage([
   {
     id: 'artist-7',
     name: 'Michael Jackson',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/3/31/Michael_Jackson_in_1988.jpg',
     genre: 'Pop',
     followers: '42.1M',
     monthlyListeners: '48.7M',
@@ -482,7 +465,6 @@ export const sampleArtists = withFallbackImage([
   {
     id: 'artist-8',
     name: 'Led Zeppelin',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/2/2a/Led_Zeppelin_%281975%29.jpg',
     genre: 'Rock',
     followers: '25.3M',
     monthlyListeners: '29.8M',
@@ -492,12 +474,11 @@ export const sampleArtists = withFallbackImage([
   }
 ]);
 
-export const sampleGenres = withFallbackImage([
+export const sampleGenres = assignGoodImages([
   {
     id: 'pop',
     name: 'Pop',
     description: 'Popular music characterized by catchy melodies and broad appeal',
-    imageUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80',
     color: '#FF6B6B',
     tracks: sampleTracks.filter(track => track.genre === 'Pop'),
     popularity: 95
@@ -506,7 +487,6 @@ export const sampleGenres = withFallbackImage([
     id: 'rock',
     name: 'Rock',
     description: 'A broad genre of popular music that originated as "rock and roll"',
-    imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400',
     color: '#4ECDC4',
     tracks: sampleTracks.filter(track => track.genre === 'Rock'),
     popularity: 88
@@ -515,7 +495,6 @@ export const sampleGenres = withFallbackImage([
     id: 'r&b',
     name: 'R&B',
     description: 'Rhythm and blues, a genre of popular African-American music',
-    imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400',
     color: '#45B7D1',
     tracks: sampleTracks.filter(track => track.genre === 'R&B'),
     popularity: 82
@@ -524,7 +503,6 @@ export const sampleGenres = withFallbackImage([
     id: 'hip-hop',
     name: 'Hip Hop',
     description: 'A music genre developed in the United States by inner-city African Americans',
-    imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400',
     color: '#96CEB4',
     tracks: sampleTracks.filter(track => track.genre === 'Hip Hop'),
     popularity: 85
@@ -533,7 +511,6 @@ export const sampleGenres = withFallbackImage([
     id: 'electronic',
     name: 'Electronic',
     description: 'Music that employs electronic musical instruments and electronic music technology',
-    imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400',
     color: '#FFEAA7',
     tracks: [],
     popularity: 78
@@ -542,19 +519,17 @@ export const sampleGenres = withFallbackImage([
     id: 'jazz',
     name: 'Jazz',
     description: 'A music genre that originated in the African-American communities of New Orleans',
-    imageUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400',
     color: '#DDA0DD',
     tracks: [],
     popularity: 72
   }
 ]);
 
-export const samplePlaylists = withFallbackImage([
+export const samplePlaylists = assignGoodImages([
   {
     id: 'playlist-1',
     title: 'Today\'s Top Hits',
     description: 'The biggest hits right now.',
-    imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
     tracks: sampleTracks.slice(0, 10),
     creator: 'Spotify',
     followers: '32.5M',
@@ -568,7 +543,6 @@ export const samplePlaylists = withFallbackImage([
     id: 'playlist-2',
     title: 'Rock Classics',
     description: 'The greatest rock songs of all time.',
-    imageUrl: 'https://i.scdn.co/image/ab67706f00000002b0fe40a6e1692822f5a9d8f1',
     tracks: sampleTracks.filter(track => track.genre === 'Rock'),
     creator: 'Rock Music',
     followers: '15.2M',
@@ -582,7 +556,6 @@ export const samplePlaylists = withFallbackImage([
     id: 'playlist-3',
     title: 'Chill Vibes',
     description: 'Relaxing music for your downtime.',
-    imageUrl: 'https://i.scdn.co/image/ab67706f00000002b0fe40a6e1692822f5a9d8f1',
     tracks: sampleTracks.slice(5, 15),
     creator: 'Chill Music',
     followers: '8.7M',
@@ -596,7 +569,6 @@ export const samplePlaylists = withFallbackImage([
     id: 'playlist-4',
     title: 'Workout Mix',
     description: 'High-energy tracks to keep you motivated.',
-    imageUrl: 'https://i.scdn.co/image/ab67706f00000002b0fe40a6e1692822f5a9d8f1',
     tracks: sampleTracks.filter(track => track.mood === 'Energetic'),
     creator: 'Fitness Music',
     followers: '12.3M',
@@ -610,7 +582,6 @@ export const samplePlaylists = withFallbackImage([
     id: 'playlist-5',
     title: 'Romantic Evening',
     description: 'Perfect for a romantic dinner or date night.',
-    imageUrl: 'https://i.scdn.co/image/ab67706f00000002b0fe40a6e1692822f5a9d8f1',
     tracks: sampleTracks.filter(track => track.mood === 'Romantic'),
     creator: 'Love Songs',
     followers: '6.8M',
@@ -624,7 +595,6 @@ export const samplePlaylists = withFallbackImage([
     id: 'playlist-6',
     title: 'Road Trip',
     description: 'The perfect soundtrack for your journey.',
-    imageUrl: 'https://i.scdn.co/image/ab67706f00000002b0fe40a6e1692822f5a9d8f1',
     tracks: sampleTracks.slice(0, 12),
     creator: 'Travel Music',
     followers: '9.4M',

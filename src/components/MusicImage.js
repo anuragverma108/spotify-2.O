@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-const FALLBACK_IMAGE = 'https://via.placeholder.com/300x300?text=No+Image';
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80';
 
 const MusicImage = ({ src, alt, className, style, ...props }) => {
-  const [imgSrc, setImgSrc] = useState(src || FALLBACK_IMAGE);
+  // Use fallback if src is missing, empty, or only whitespace
+  const getValidSrc = (s) => (s && typeof s === 'string' && s.trim() ? s : FALLBACK_IMAGE);
+  const [imgSrc, setImgSrc] = useState(getValidSrc(src));
 
   useEffect(() => {
-    setImgSrc(src || FALLBACK_IMAGE);
+    setImgSrc(getValidSrc(src));
   }, [src]);
 
   return (
